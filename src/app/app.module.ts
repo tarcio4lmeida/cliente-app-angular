@@ -3,10 +3,11 @@ import { HomeComponent } from './home/home.component';
 import { TemplateModule } from './template/template.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http'
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { ClientesService } from './clientes.service'
 @NgModule({
   declarations: [
     AppComponent,
@@ -14,11 +15,12 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     TemplateModule,
     AppRoutingModule,
-    ClientesModule
+    ClientesModule,
   ],
-  providers: [],
+  providers: [ClientesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
