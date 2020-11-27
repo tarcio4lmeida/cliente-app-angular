@@ -11,17 +11,13 @@ export class ClientesService {
   constructor(private http: HttpClient) {
 
   }
-
-  getCliente() : Cliente{
-    let cliente: Cliente = new Cliente();
-    cliente.nome = 'Fulano de tal';
-    cliente.cpf = '88888888888'
-    
-    return cliente; 
-  }
   
   salvar (cliente: Cliente) : Observable<Cliente> {
     // Observable -> requisicao assíncrona -> observable fica observando até quando a req. encerrar
     return this.http.post<Cliente>('http://localhost:8080/api/clientes', cliente);
+  }
+
+  getClientes() :Observable <Cliente[]>{
+    return this.http.get<Cliente[]>('http://localhost:8080/api/clientes');
   }
 }
