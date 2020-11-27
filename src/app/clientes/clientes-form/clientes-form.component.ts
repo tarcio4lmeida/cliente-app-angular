@@ -8,23 +8,29 @@ import { ClientesService } from '../../clientes.service';
   templateUrl: './clientes-form.component.html',
   styleUrls: ['./clientes-form.component.css']
 })
+
 export class ClientesFormComponent implements OnInit {
 
   cliente: Cliente;
+  sucess: boolean = false;
+  errors: String[];
   
-  constructor ( private service: ClientesService ) { //quando declaramos no construtor estamos criando uma variavel
+  constructor(private service: ClientesService) { //quando declaramos no construtor estamos criando uma variavel
     this.cliente = new Cliente();
-    
   }
 
   ngOnInit(): void {
   }
 
-  onSubmit(){
-    console.log(this.cliente)
+  onSubmit() {
     this.service.salvar(this.cliente)
-    .subscribe(response => { //subscribe recebe a resposta do observable 
-       console.log(response);
-    }) 
+      .subscribe(response => { //subscribe recebe a resposta do observable 
+        this.errors = null;
+        this.sucess = true;
+        this.cliente = response;
+      }, errorResponse => {
+        this.errors = errorResponse.error.errors;
+        this.sucess = false;
+      })
   }
 }
