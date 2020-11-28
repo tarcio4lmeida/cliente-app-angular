@@ -1,6 +1,7 @@
 import { ClientesService } from './../../clientes.service';
 import { Cliente } from './../cliente';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-clientes-lista',
@@ -11,7 +12,8 @@ export class ClientesListaComponent implements OnInit {
 
   clientes: Cliente[] = [];
 
-  constructor(private service: ClientesService) {
+  constructor(private service: ClientesService,
+              private router: Router) {
 
    }
 
@@ -23,6 +25,10 @@ export class ClientesListaComponent implements OnInit {
        
       })
 
+  }
+
+  public novoCadastro(){
+    this.router.navigate(['/clientes-form'])
   }
 
 }
