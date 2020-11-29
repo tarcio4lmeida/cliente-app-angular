@@ -26,17 +26,20 @@ export class ClientesFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let params  = this.activatedRoute.params
-    console.log(params)
-    if (params && params.value && params.value.id) {
-      this.id =  params.value.id;
-      this.service
-        .getClientesById(this.id)
-        .subscribe(
-          response => this.cliente = response,
-          errorResponse => this.cliente = new Cliente()
-        )
-    }
+    let params : Observable<Params> = this.activatedRoute.params
+    params.subscribe(urlParams =>{
+      this.id = urlParams['id'];
+        if(this.id){
+          this.service
+          .getClientesById(this.id)
+          .subscribe(
+            response => this.cliente = response,
+            errorResponse => this.cliente = new Cliente()
+          )
+        }
+      
+    })
+   
   }
 
   voltarParaListagem() {
@@ -44,15 +47,25 @@ export class ClientesFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.service.salvar(this.cliente)
-      .subscribe(response => { //subscribe recebe a resposta do observable 
+    if(this.id){
+      this.service.atualizar(this.cliente)
+      .subscribe(response =>{
         this.errors = null;
         this.sucess = true;
-        this.cliente = response;
       }, errorResponse => {
-        this.errors = errorResponse.error.errors;
-        this.sucess = false;
+          this.errors = ['Erro ao atualizar o cliente'];
       })
+    }else{
+      this.service.salvar(this.cliente)
+        .subscribe(response => { //subscribe recebe a resposta do observable 
+          this.errors = null;
+          this.sucess = true;
+          this.cliente = response;
+        }, errorResponse => {
+          this.errors = errorResponse.error.errors;
+          this.sucess = false;
+        })
+      }
   }
-  v
+  
 }
