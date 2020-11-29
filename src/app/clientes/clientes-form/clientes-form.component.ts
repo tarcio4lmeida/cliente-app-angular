@@ -1,8 +1,9 @@
 import { Cliente } from '../cliente';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params  } from '@angular/router';
 
 import { ClientesService } from '../../clientes.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-clientes-form',
@@ -15,16 +16,30 @@ export class ClientesFormComponent implements OnInit {
   cliente: Cliente;
   sucess: boolean = false;
   errors: String[];
-  
+  id: any;
+
   constructor(private service: ClientesService,
-              private router: Router) { //quando declaramos no construtor estamos criando uma variavel
+              private router: Router,
+              private activatedRoute : ActivatedRoute
+              ) { //quando declaramos no construtor estamos criando uma variavel
     this.cliente = new Cliente();
   }
 
   ngOnInit(): void {
+    let params  = this.activatedRoute.params
+    console.log(params)
+    if (params && params.value && params.value.id) {
+      this.id =  params.value.id;
+      this.service
+        .getClientesById(this.id)
+        .subscribe(
+          response => this.cliente = response,
+          errorResponse => this.cliente = new Cliente()
+        )
+    }
   }
 
-  voltarParaListagem(){
+  voltarParaListagem() {
     this.router.navigate(['/clientes-lista']);
   }
 
