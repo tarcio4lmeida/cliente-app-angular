@@ -17,7 +17,8 @@ export class ClientesService {
   
   salvar (cliente: Cliente) : Observable<Cliente> {
     // Observable -> requisicao assíncrona -> observable fica observando até quando a req. encerrar
-    return this.http.post<Cliente>(this.apiURL, cliente);
+    console.log(this.apiURL);
+    return this.http.post<Cliente>(`${this.apiURL}`, cliente);
   }
 
   getClientes() :Observable <Cliente[]>{
