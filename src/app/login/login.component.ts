@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,9 @@ export class LoginComponent {
   mensagemSucesso: string;
   errors: String[];
 
-  constructor() { }
+  constructor(
+    private router: Router,
+  ) { }
 
   onSubmit(){
     console.log(`user: ${this.username}, password: ${this.password}` );
@@ -24,4 +27,7 @@ export class LoginComponent {
     this.cadastrando = true;
   }
   
+  cancelaCadastro(){
+    this.cadastrando = false;
+  }
 }
