@@ -1,3 +1,4 @@
+import { AuthService } from './auth.service';
 import { ServicoPrestadoService } from './servico-prestado.service';
 import { ServicoPrestadoModule } from './servico-prestado/servico-prestado.module';
 import { ClientesModule } from './clientes/clientes.module';
@@ -29,7 +30,7 @@ import { LayoutComponent } from './layout/layout.component';
     ClientesModule,
     ServicoPrestadoModule
   ],
-  providers: [ClientesService, ServicoPrestadoService],
+  providers: [ClientesService, ServicoPrestadoService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
