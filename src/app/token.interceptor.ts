@@ -6,6 +6,7 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { UrlSegment } from '@angular/router';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -14,8 +15,10 @@ export class TokenInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const tokenString = localStorage.getItem('access_token');
-    
-    if(tokenString){
+    const url = request.url;
+
+    if(tokenString && url.endsWith('oauth/token')){
+      
       const token = JSON.parse(tokenString);
       const jwt = token.access_token;
 
